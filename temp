@@ -1,0 +1,46 @@
+class Shows(db.Model):
+    __tablename__ = 'shows'
+    id = db.Column(db.Integer , primary_key=True , autoincrement=True)
+    venues = db.Column(db.Integer , db.ForeignKey('venue.id') , primary_key=True )
+    artists = db.Column (db.Integer , db.ForeignKey('artist.id') , primary_key=True)
+    start_time = db.Column(db.DateTime)
+    artist = db.relationship('Artist' , backref='venues1') 
+    venue = db.relationship('Venue' , backref='artists1')
+    def __repr__(self):
+        return f'Show<id:{self.id},venuue:{self.venues} , artists:{self.artists},artist:{self.artist},venue={self.venue}>'
+ 
+
+
+
+ class Artist(db.Model):
+    __tablename__ = 'artist'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    city = db.Column(db.String(120))
+    state = db.Column(db.String(120))
+    phone = db.Column(db.String(120))
+    genres = db.Column(db.String(120))
+    image_link = db.Column(db.String(500))
+    facebook_link = db.Column(db.String(120))
+    website_link = db.Column(db.String(120))
+    is_seeking_venue = db.Column(db.Boolean)
+    seeking_desc= db.Column(db.String(120))
+    venues = db.relationship('Shows' , backref='shows_artists' , lazy=True)
+
+
+
+class Venue(db.Model):
+    __tablename__ = 'venue'
+    id = db.Column(db.Integer , primary_key=True)
+    name = db.Column(db.String)
+    city = db.Column(db.String(120))
+    state = db.Column(db.String(120))
+    address = db.Column(db.String(120))
+    phone = db.Column(db.String(120))
+    image_link = db.Column(db.String(500))
+    facebook_link = db.Column(db.String(120))
+    genres = db.Column(db.String(1000))
+    website_link = db.Column(db.String(500))
+    is_seeking_talent=db.Column(db.Boolean)
+    seeking_talent_desck = db.Column(db.String(1000))
